@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class Q2 {
@@ -39,8 +38,6 @@ public class Q2 {
 
     freq1.forEach(printMap);
     freq2.forEach(printMap);
-
-
 
 
     /* Just to explore grouping by without any downstream

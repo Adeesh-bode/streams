@@ -1,10 +1,3 @@
-/*
-
-Q12. Sort by Multiple Conditions
-Given a List<Employee>, sort by:
- salary descending then name ascending
-
- */
 
 import java.util.*;
 import java.util.stream.*;
@@ -35,91 +28,27 @@ class Employee {
     public String toString() {
         return "Employee{" + "salary=" + salary + ", name=" + name + '}';
     }
+
 }
 
-public class Q12 {
 
-    public static void main(String[] args){
+publc class Grouping{
 
+    public static void main(String[] args) {
         List<Employee> e = new ArrayList<>( // or better is direct List.of as we dont want mutable
                 List.of(
-                new Employee(2000, "Adesh", "ENGLISH"),
-                new Employee(3000, "Benjamin", "MATHS"),
-                new Employee(4000, "Daniel", "ENGLISH"),
-                new Employee(5000, "Dan", "FRENCH"),
-                new Employee(5000, "Man", "GERMAN")
+                        new Employee(2000, "Adesh", "ENGLISH"),
+                        new Employee(3000, "Benjamin", "MATHS"),
+                        new Employee(4000, "Daniel", "ENGLISH"),
+                        new Employee(5000, "Dan", "FRENCH"),
+                        new Employee(5000, "Man", "GERMAN")
                 )
         );
-
-        List<Employee> sorted = e.stream().sorted(
-                Comparator.comparingInt(Employee::getSalary).reversed().
-                thenComparing(Comparator.comparing(Employee::getName))
-        ).toList();
-
-        for (Employee e1 : sorted) {
-            System.out.println(e1);
-        }
-
-
-        // m2 - External Comparator class
-
-        /*
-
-        // External Comparator
-        class EmployeeComparator implements Comparator<Employee> {
-            @Override
-            public int compare(Employee e1, Employee e2) {
-                // First: salary descending
-                int salaryCompare = Integer.compare(e2.getSalary(), e1.getSalary());
-
-                // If salary same → compare name ascending
-                if (salaryCompare == 0) {
-                    return e1.getName().compareTo(e2.getName());
-                }
-
-                return salaryCompare;
-            }
-        }
-
-    use::
-            Collections.sort(e, new EmployeeComparator());
-
-
-         */
-
-
-
-        /* m3 - comparator using lambda
-
-        Comparator<Employee> empComparator = (e1, e2) -> {
-            int salaryCompare = Integer.compare(e2.getSalary(), e1.getSalary()); // descend
-
-            if (salaryCompare == 0) {
-                return e1.getName().compareTo(e2.getName()); //ascend
-            }
-
-            return salaryCompare;
-        };
-
-        // TRICK TO REMEBER:
-        // Ascending order pehle 1 fir 2 - descending pehle 2 fir 1 ( ascending/descending nature)
-        //
-
-        e.stream()
-         .sorted(empComparator)
-         .forEach(System.out::println);
-
-
-         */
-
-
-
-
 
 
         // Q2 - group emp by dept
         Map<String, List<Employee>> depts = e.stream().collect(Collectors.groupingBy(
-           E -> E.getDept(),
+                E -> E.getDept(),
                 Collectors.toList()
         ));
 
@@ -181,13 +110,17 @@ public class Q12 {
         e.stream().collect(
                 Collectors.partitioningBy(
                         E -> E.getSalary() >= 4000
-        )).forEach((bool, empss) -> {
-                System.out.println(bool);
-                System.out.println(empss);
-            }
-            );
+                )).forEach((bool, empss) -> {
+                    System.out.println(bool);
+                    System.out.println(empss);
+                }
+        );
 
 
     }
 
+
+    }
 }
+
+

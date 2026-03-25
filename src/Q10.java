@@ -18,6 +18,7 @@ public class Q10 {
                 )
         );
 
+
         List<Integer> flat = ls.stream().flatMap(List::stream).toList();
 
         flat.forEach(System.out::println);
