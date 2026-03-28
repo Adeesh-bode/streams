@@ -21,12 +21,23 @@ record Employee (
 }
 
 
+record Order (double amount) {};
+
+record Customer (
+    String name,
+    List<Order> orders
+){};
+
+
+
+
 
 public class Combination {
     public static void main(String[] args) {
         List<Employee> employees = List.of(
                 new Employee(1, "A", "IT", 90000, true),
                 new Employee(2, "B", "IT", 120000, true),
+                new Employee(3, "A", "HR", 70000, true),
                 new Employee(3, "C", "HR", 70000, true),
                 new Employee(4, "D", "HR", 80000, false)
         );
@@ -107,6 +118,45 @@ public class Combination {
 //                )
 
 
+        // Q4. Find Duplicate Names Across Departments - Return names that appear more than once
+
+        employees.stream().collect(
+                Collectors.groupingBy(
+                    Employee::name,
+                        Collectors.counting()
+                )
+        ).forEach((key, value)->{
+            System.out.println(key);
+            System.out.println(value);
+        });
+
+
+
+
+        // Q5. Flatten Orders and Calculate Total Revenue
+        System.out.println("-------------------------------");
+        List<Customer> customers = List.of(
+                new Customer("A", List.of(new Order(100), new Order(200))),
+                new Customer("B", List.of(new Order(300)))
+        );
+
+        double revenue = customers.stream().flatMap(c -> c.orders().stream()).collect(Collectors.summingDouble(Order::amount));
+        System.out.println(revenue);
+
+
+        // m2 - 2step using MAP -- better mapTo ( can use normal map as well )
+        double total =
+                customers.stream()
+                        .flatMap(c -> c.getOrders().stream())
+                        .mapToDouble(Order::getAmount)
+                        .sum();
+
+        System.out.println(total);
+
+        /*
+        ✔ map() → object stream
+        ✔ mapToInt() → primitive stream (faster, more efficient)
+         */
 
     }
 }
